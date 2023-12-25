@@ -63,7 +63,7 @@ export class ArtistService {
       throw new NotFoundException();
     }
 
-    this.artists = this.artists.filter((trackItem) => trackItem.id !== id);
+    this.artists = this.artists.filter((artistItem) => artistItem.id !== id);
 
     return artist;
   }
