@@ -15,12 +15,14 @@ import {
   UpdatePasswordParamsDto,
 } from './dto/update-password-dto';
 
+import { securityUtils } from '../../utils';
+
 @Injectable()
 export class UserService {
   private users: User[] = [];
 
-  getUsers(): User[] {
-    return this.users;
+  getUsers() {
+    return this.users.map(securityUtils.getPublicUserData);
   }
 
   getUserById(id: string) {
@@ -30,7 +32,7 @@ export class UserService {
       throw new NotFoundException('User does not exist');
     }
 
-    return user;
+    return securityUtils.getPublicUserData(user);
   }
 
   createUser({ login, password }: CreateUserDto) {
@@ -45,7 +47,7 @@ export class UserService {
 
     this.users.push(user);
 
-    return user;
+    return securityUtils.getPublicUserData(user);
   }
 
   updatePassword(
@@ -68,7 +70,7 @@ export class UserService {
       userItem.id === user.id ? updatedUser : userItem,
     );
 
-    return updatedUser;
+    return securityUtils.getPublicUserData(updatedUser);
   }
 
   deleteUser({ id }: DeleteUserDto) {
@@ -80,6 +82,6 @@ export class UserService {
 
     this.users = this.users.filter((userItem) => userItem.id !== id);
 
-    return user;
+    return securityUtils.getPublicUserData(user);
   }
 }
