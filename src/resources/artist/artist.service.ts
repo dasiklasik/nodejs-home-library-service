@@ -3,13 +3,10 @@ import { v4 } from 'uuid';
 
 import { Artist } from './artist.model';
 
-import { GetArtistByIdDto } from './dto/get-artist-by-id-dto';
 import { CreateArtistDto } from './dto/create-artist-dto';
-import {
-  UpdateArtistDto,
-  UpdateArtistParamsDto,
-} from './dto/update-artist-dto';
-import { DeleteArtistDto } from './dto/delete-artist-dto';
+import { UpdateArtistDto } from './dto/update-artist-dto';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Injectable()
 export class ArtistService {
@@ -19,7 +16,7 @@ export class ArtistService {
     return this.artists;
   }
 
-  getArtistById({ id }: GetArtistByIdDto) {
+  getArtistById({ id }: IdParamDto) {
     const artist = this.artists.find((artistItem) => artistItem.id === id);
 
     if (!artist) {
@@ -40,7 +37,7 @@ export class ArtistService {
     return artist;
   }
 
-  updateArtist({ id }: UpdateArtistParamsDto, body: UpdateArtistDto) {
+  updateArtist({ id }: IdParamDto, body: UpdateArtistDto) {
     const artist = this.artists.find((artistItem) => artistItem.id === id);
 
     if (!artist) {
@@ -56,7 +53,7 @@ export class ArtistService {
     return updatedArtist;
   }
 
-  deleteArtist({ id }: DeleteArtistDto) {
+  deleteArtist({ id }: IdParamDto) {
     const artist = this.artists.find((artistItem) => artistItem.id === id);
 
     if (!artist) {

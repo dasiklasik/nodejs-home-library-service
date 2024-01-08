@@ -11,13 +11,10 @@ import {
 
 import { ArtistService } from './artist.service';
 
-import { GetArtistByIdDto } from './dto/get-artist-by-id-dto';
 import { CreateArtistDto } from './dto/create-artist-dto';
-import {
-  UpdateArtistDto,
-  UpdateArtistParamsDto,
-} from './dto/update-artist-dto';
-import { DeleteArtistDto } from "./dto/delete-artist-dto";
+import { UpdateArtistDto } from './dto/update-artist-dto';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Controller('artist')
 export class ArtistController {
@@ -29,7 +26,7 @@ export class ArtistController {
   }
 
   @Get(':id')
-  getArtistById(@Param() params: GetArtistByIdDto) {
+  getArtistById(@Param() params: IdParamDto) {
     return this.artistService.getArtistById(params);
   }
 
@@ -40,16 +37,13 @@ export class ArtistController {
   }
 
   @Put(':id')
-  updateArtist(
-    @Param() params: UpdateArtistParamsDto,
-    @Body() body: UpdateArtistDto,
-  ) {
+  updateArtist(@Param() params: IdParamDto, @Body() body: UpdateArtistDto) {
     return this.artistService.updateArtist(params, body);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  deleteArtist(@Param() params: DeleteArtistDto) {
+  deleteArtist(@Param() params: IdParamDto) {
     return this.artistService.deleteArtist(params);
   }
 }

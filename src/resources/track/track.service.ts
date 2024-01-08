@@ -3,10 +3,10 @@ import { v4 } from 'uuid';
 
 import { Track } from './track.model';
 
-import { GetTrackByIdDto } from './dto/get-track-by-id-dto';
 import { CreateTrackDto } from './dto/create-track-dto';
-import { UpdateTrackDto, UpdateTrackParamsDto } from './dto/update-track-dto';
-import { DeleteTrackDto } from './dto/delete-track-dto';
+import { UpdateTrackDto } from './dto/update-track-dto';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Injectable()
 export class TrackService {
@@ -16,7 +16,7 @@ export class TrackService {
     return this.tracks;
   }
 
-  getTrackById({ id }: GetTrackByIdDto) {
+  getTrackById({ id }: IdParamDto) {
     const track = this.tracks.find((trackItem) => trackItem.id === id);
 
     if (!track) {
@@ -37,7 +37,7 @@ export class TrackService {
     return track;
   }
 
-  updateTrack({ id }: UpdateTrackParamsDto, body: UpdateTrackDto) {
+  updateTrack({ id }: IdParamDto, body: UpdateTrackDto) {
     const track = this.tracks.find((trackItem) => trackItem.id === id);
 
     if (!track) {
@@ -53,7 +53,7 @@ export class TrackService {
     return updatedTrack;
   }
 
-  deleteTrack({ id }: DeleteTrackDto) {
+  deleteTrack({ id }: IdParamDto) {
     const track = this.tracks.find((trackItem) => trackItem.id === id);
 
     if (!track) {

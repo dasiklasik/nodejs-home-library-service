@@ -9,13 +9,11 @@ import { v4 } from 'uuid';
 import { User } from './user.model';
 
 import { CreateUserDto } from './dto/create-user-dto';
-import { DeleteUserDto } from './dto/delete-user-dto';
-import {
-  UpdatePasswordDto,
-  UpdatePasswordParamsDto,
-} from './dto/update-password-dto';
+import { UpdatePasswordDto } from './dto/update-password-dto';
 
 import { securityUtils } from '../../utils';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Injectable()
 export class UserService {
@@ -51,7 +49,7 @@ export class UserService {
   }
 
   updatePassword(
-    { id }: UpdatePasswordParamsDto,
+    { id }: IdParamDto,
     { oldPassword, newPassword }: UpdatePasswordDto,
   ) {
     const user = this.users.find((item) => item.id === id);
@@ -73,7 +71,7 @@ export class UserService {
     return securityUtils.getPublicUserData(updatedUser);
   }
 
-  deleteUser({ id }: DeleteUserDto) {
+  deleteUser({ id }: IdParamDto) {
     const user = this.users.find((userItem) => userItem.id === id);
 
     if (!user) {

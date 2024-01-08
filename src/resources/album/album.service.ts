@@ -3,10 +3,10 @@ import { v4 } from 'uuid';
 
 import { Album } from './album.model';
 
-import { GetAlbumByIdDto } from './dto/get-album-by-id-dto';
 import { CreateAlbumDto } from './dto/create-album-dto';
-import { UpdateAlbumDto, UpdateAlbumParamsDto } from './dto/update-album-dto';
-import { DeleteAlbumDto } from './dto/delete-album-dto';
+import { UpdateAlbumDto } from './dto/update-album-dto';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Injectable()
 export class AlbumService {
@@ -16,7 +16,7 @@ export class AlbumService {
     return this.albums;
   }
 
-  getAlbumById({ id }: GetAlbumByIdDto) {
+  getAlbumById({ id }: IdParamDto) {
     const album = this.albums.find((albumItem) => albumItem.id === id);
 
     if (!album) {
@@ -37,7 +37,7 @@ export class AlbumService {
     return album;
   }
 
-  updateAlbum({ id }: UpdateAlbumParamsDto, body: UpdateAlbumDto) {
+  updateAlbum({ id }: IdParamDto, body: UpdateAlbumDto) {
     const album = this.albums.find((albumItem) => albumItem.id === id);
 
     if (!album) {
@@ -53,7 +53,7 @@ export class AlbumService {
     return updatedAlbum;
   }
 
-  deleteAlbum({ id }: DeleteAlbumDto) {
+  deleteAlbum({ id }: IdParamDto) {
     const album = this.albums.find((albumItem) => albumItem.id === id);
 
     if (!album) {

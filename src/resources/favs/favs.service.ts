@@ -8,11 +8,11 @@ import {
 import { Favorites } from './favs.model';
 import { GetFavoritesResponse } from './favs.types';
 
-import { IdParamDto } from './dto/id-param-dto';
-
 import { AlbumService } from '../album/album.service';
 import { ArtistService } from '../artist/artist.service';
 import { TrackService } from '../track/track.service';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Injectable()
 export class FavsService {

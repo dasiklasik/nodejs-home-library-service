@@ -2,7 +2,7 @@ import { Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
 
 import { FavsService } from './favs.service';
 
-import { IdParamDto } from './dto/id-param-dto';
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Controller('favs')
 export class FavsController {

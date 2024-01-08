@@ -11,13 +11,10 @@ import {
 
 import { UserService } from './user.service';
 
-import { GetUserByIdDto } from './dto/get-user-by-id-dto';
 import { CreateUserDto } from './dto/create-user-dto';
-import { DeleteUserDto } from './dto/delete-user-dto';
-import {
-  UpdatePasswordDto,
-  UpdatePasswordParamsDto,
-} from './dto/update-password-dto';
+import { UpdatePasswordDto } from './dto/update-password-dto';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Controller('user')
 export class UserController {
@@ -29,7 +26,7 @@ export class UserController {
   }
 
   @Get(':id')
-  getUserById(@Param() { id }: GetUserByIdDto) {
+  getUserById(@Param() { id }: IdParamDto) {
     return this.userService.getUserById(id);
   }
 
@@ -40,15 +37,12 @@ export class UserController {
   }
 
   @Put(':id')
-  updatePassword(
-    @Param() params: UpdatePasswordParamsDto,
-    @Body() body: UpdatePasswordDto,
-  ) {
+  updatePassword(@Param() params: IdParamDto, @Body() body: UpdatePasswordDto) {
     return this.userService.updatePassword(params, body);
   }
 
   @Delete(':id')
-  deleteUser(@Param() params: DeleteUserDto) {
+  deleteUser(@Param() params: IdParamDto) {
     return this.userService.deleteUser(params);
   }
 }

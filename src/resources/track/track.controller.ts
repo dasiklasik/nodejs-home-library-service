@@ -11,10 +11,10 @@ import {
 
 import { TrackService } from './track.service';
 
-import { GetTrackByIdDto } from './dto/get-track-by-id-dto';
 import { CreateTrackDto } from './dto/create-track-dto';
-import { UpdateTrackDto, UpdateTrackParamsDto } from './dto/update-track-dto';
-import { DeleteTrackDto } from './dto/delete-track-dto';
+import { UpdateTrackDto } from './dto/update-track-dto';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Controller('track')
 export class TrackController {
@@ -26,7 +26,7 @@ export class TrackController {
   }
 
   @Get(':id')
-  getTrackById(@Param() params: GetTrackByIdDto) {
+  getTrackById(@Param() params: IdParamDto) {
     return this.trackService.getTrackById(params);
   }
 
@@ -37,16 +37,13 @@ export class TrackController {
   }
 
   @Put(':id')
-  updateTrack(
-    @Param() params: UpdateTrackParamsDto,
-    @Body() body: UpdateTrackDto,
-  ) {
+  updateTrack(@Param() params: IdParamDto, @Body() body: UpdateTrackDto) {
     return this.trackService.updateTrack(params, body);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  deleteTrack(@Param() params: DeleteTrackDto) {
+  deleteTrack(@Param() params: IdParamDto) {
     return this.trackService.deleteTrack(params);
   }
 }

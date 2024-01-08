@@ -11,10 +11,10 @@ import {
 
 import { AlbumService } from './album.service';
 
-import { GetAlbumByIdDto } from './dto/get-album-by-id-dto';
 import { CreateAlbumDto } from './dto/create-album-dto';
-import { UpdateAlbumDto, UpdateAlbumParamsDto } from './dto/update-album-dto';
-import { DeleteAlbumDto } from './dto/delete-album-dto';
+import { UpdateAlbumDto } from './dto/update-album-dto';
+
+import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Controller('album')
 export class AlbumController {
@@ -26,7 +26,7 @@ export class AlbumController {
   }
 
   @Get(':id')
-  getAlbumById(@Param() params: GetAlbumByIdDto) {
+  getAlbumById(@Param() params: IdParamDto) {
     return this.albumService.getAlbumById(params);
   }
 
@@ -37,16 +37,13 @@ export class AlbumController {
   }
 
   @Put(':id')
-  updateAlbum(
-    @Param() params: UpdateAlbumParamsDto,
-    @Body() body: UpdateAlbumDto,
-  ) {
+  updateAlbum(@Param() params: IdParamDto, @Body() body: UpdateAlbumDto) {
     return this.albumService.updateAlbum(params, body);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  deleteAlbum(@Param() params: DeleteAlbumDto) {
+  deleteAlbum(@Param() params: IdParamDto) {
     return this.albumService.deleteAlbum(params);
   }
 }
