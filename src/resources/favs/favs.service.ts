@@ -165,4 +165,16 @@ export class FavsService {
 
     return artistId;
   }
+
+  getIsArtistInFavs(id: string) {
+    return this.favorites.artists.find((artistId) => artistId === id);
+  }
+
+  getIsAlbumInFavs(id: string) {
+    return this.favorites.albums.find((albumId) => albumId === id);
+  }
+
+  getIsTrackInFavs(id: string) {
+    return this.favorites.tracks.find((trackId) => trackId === id);
+  }
 }

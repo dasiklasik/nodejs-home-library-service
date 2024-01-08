@@ -6,10 +6,18 @@ import { Artist } from './artist.model';
 import { CreateArtistDto } from './dto/create-artist-dto';
 import { UpdateArtistDto } from './dto/update-artist-dto';
 
+import { FavsService } from '../favs/favs.service';
+import { AlbumService } from '../album/album.service';
+
 import { IdParamDto } from '../../common/dto/id-param-dto';
 
 @Injectable()
 export class ArtistService {
+  constructor(
+    private favsService: FavsService,
+    private albumService: AlbumService,
+  ) {}
+
   private artists: Artist[] = [];
 
   getArtists() {
@@ -53,7 +61,9 @@ export class ArtistService {
     return updatedArtist;
   }
 
-  deleteArtist({ id }: IdParamDto) {
+  deleteArtist(params: IdParamDto) {
+    const { id } = params;
+
     const artist = this.artists.find((artistItem) => artistItem.id === id);
 
     if (!artist) {
@@ -61,6 +71,14 @@ export class ArtistService {
     }
 
     this.artists = this.artists.filter((artistItem) => artistItem.id !== id);
+
+    this.albumService.deleteArtistId(id);
+
+    const isArtistInFavs = this.favsService.getIsArtistInFavs(id);
+
+    if (isArtistInFavs) {
+      this.favsService.deleteArtistById(params);
+    }
 
     return artist;
   }

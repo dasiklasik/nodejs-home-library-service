@@ -7,9 +7,12 @@ import { CreateTrackDto } from './dto/create-track-dto';
 import { UpdateTrackDto } from './dto/update-track-dto';
 
 import { IdParamDto } from '../../common/dto/id-param-dto';
+import { FavsService } from '../favs/favs.service';
 
 @Injectable()
 export class TrackService {
+  constructor(private favsService: FavsService) {}
+
   private tracks: Track[] = [];
 
   getTracks() {
@@ -53,7 +56,9 @@ export class TrackService {
     return updatedTrack;
   }
 
-  deleteTrack({ id }: IdParamDto) {
+  deleteTrack(params: IdParamDto) {
+    const { id } = params;
+
     const track = this.tracks.find((trackItem) => trackItem.id === id);
 
     if (!track) {
@@ -61,6 +66,12 @@ export class TrackService {
     }
 
     this.tracks = this.tracks.filter((trackItem) => trackItem.id !== id);
+
+    const isTrackInFavs = this.favsService.getIsTrackInFavs(id);
+
+    if (isTrackInFavs) {
+      this.favsService.deleteAlbumById(params);
+    }
 
     return track;
   }
