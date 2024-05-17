@@ -7,12 +7,9 @@ import { CreateAlbumDto } from './dto/create-album-dto';
 import { UpdateAlbumDto } from './dto/update-album-dto';
 
 import { IdParamDto } from '../../common/dto/id-param-dto';
-import { FavsService } from '../favs/favs.service';
 
 @Injectable()
 export class AlbumService {
-  constructor(private favsService: FavsService) {}
-
   private albums: Album[] = [];
 
   getAlbums() {
@@ -56,9 +53,7 @@ export class AlbumService {
     return updatedAlbum;
   }
 
-  deleteAlbum(params: IdParamDto) {
-    const { id } = params;
-
+  deleteAlbum({ id }: IdParamDto) {
     const album = this.albums.find((albumItem) => albumItem.id === id);
 
     if (!album) {
@@ -67,18 +62,6 @@ export class AlbumService {
 
     this.albums = this.albums.filter((albumItem) => albumItem.id !== id);
 
-    const isAlbumInFavs = this.favsService.getIsAlbumInFavs(id);
-
-    if (isAlbumInFavs) {
-      this.favsService.deleteAlbumById(params);
-    }
-
     return album;
-  }
-
-  deleteArtistId(id: string) {
-    this.albums = this.albums.map((album) =>
-      album.artistId === id ? { ...album, artistId: null } : album,
-    );
   }
 }
