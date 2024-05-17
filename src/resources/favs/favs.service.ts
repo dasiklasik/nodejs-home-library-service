@@ -1,8 +1,10 @@
 import {
   HttpException,
   HttpStatus,
+  Inject,
   Injectable,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 
 import { Favorites } from './favs.model';
@@ -17,9 +19,10 @@ import { IdParamDto } from '../../common/dto/id-param-dto';
 @Injectable()
 export class FavsService {
   constructor(
+    @Inject(forwardRef(() => TrackService))
+    private trackService: TrackService,
     private albumService: AlbumService,
     private artistService: ArtistService,
-    private trackService: TrackService,
   ) {}
 
   private favorites: Favorites = { albums: [], artists: [], tracks: [] };

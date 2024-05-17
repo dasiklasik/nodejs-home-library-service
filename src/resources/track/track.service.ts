@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { v4 } from 'uuid';
 
 import { Track } from './track.model';
@@ -7,10 +12,16 @@ import { CreateTrackDto } from './dto/create-track-dto';
 import { UpdateTrackDto } from './dto/update-track-dto';
 
 import { IdParamDto } from '../../common/dto/id-param-dto';
+import { FavsService } from '../favs/favs.service';
 
 @Injectable()
 export class TrackService {
   private tracks: Track[] = [];
+
+  constructor(
+    @Inject(forwardRef(() => FavsService))
+    private readonly favsService: FavsService,
+  ) {}
 
   getTracks() {
     return this.tracks;
